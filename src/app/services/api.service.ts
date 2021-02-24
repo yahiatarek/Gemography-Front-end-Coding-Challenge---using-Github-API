@@ -12,4 +12,8 @@ export class APIService {
   getAPI(): Observable<any> {
     return this._HttpClient.get(this.GithubUrl);
   }
+
+  getStarred(UserName): Observable<any> {
+    return this._HttpClient.get(`https://api.github.com/users/${UserName}/starred`);
+  }
 }
