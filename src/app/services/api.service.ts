@@ -9,11 +9,5 @@ export class APIService {
   GithubUrl: string = "https://api.github.com/search/repositories?q=created:%3E2017-10-22&sort=stars&order=desc"
   constructor(private _HttpClient: HttpClient) { }
 
-  getAPI(): Observable<any> {
-    return this._HttpClient.get(this.GithubUrl);
-  }
 
-  getStarred(UserName): Observable<any> {
-    return this._HttpClient.get(`https://api.github.com/users/${UserName}/starred`);
-  }
 }
