@@ -8,21 +8,44 @@ const axios = require('axios').default;
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+
   Items: any
-  GithubUrl: string = "https://api.github.com/search/repositories?q=created:%3E2017-10-22&sort=stars&order=desc"
+  GithubUrl: string
   names = new BehaviorSubject("");
   myName: any
+  myDays: any
   pageNo: number = 0
+  days = new BehaviorSubject("");
   constructor(public _APIService: APIService) {
+    this.getDate30DaysBefore()
     const axios = require('axios');
     this.display("")
+  }
+  getDate30DaysBefore() {
+    let date = new Date();
+    date.setDate(date.getDate() - 30);
+    let dateString = date.toISOString().split('T')[0];
+    this.GithubUrl = `https://api.github.com/search/repositories?q=created:%3E${dateString}&sort=stars&order=desc`
+    //console.log(dateString);
+
   }
   loop(data) {
     this.names.next(data)
   }
+  addingDays(days) {
+    this.days.next(days)
+  }
   ngOnInit(): void {
     this.names.subscribe((data) => {
-      this.myName = this.names.value
+      this.myName = data
+      console.log(data);
+
+    })
+
+    this.days.subscribe((data) => {
+      //console.log(data);
+
+      this.myDays = data
     })
   }
 
@@ -36,28 +59,33 @@ export class MainComponent implements OnInit {
       .catch((error) => {
 
       })
-    //     .then(() => {
-    //         this.Items.forEach(element => {
-    //           console.log(element.owner.url)
-    //           let url = element.owner.url
-    //           axios.get(url).then((data) => {
-    //             if (data) {
-    //               this.loop(data.data.name)
+      .then(() => {
+        this.Items.forEach(element => {
+          let url = element.owner.url
+          let now = new Date()
+          let date = new Date(element.pushed_at)
+          let daysAgo = Math.abs(now.getTime() - date.getTime());
+          let days = Math.round(daysAgo / (60 * 60 * 24 * 1000))
+          //console.log(days)
+          this.addingDays(days)
+          axios.get(url).then((data) => {
+            if (data) {
+              this.loop(data.data.name)
 
-    //             } else {
-    //               return "unknown"
-    //             }
-    //           }).catch(() => {
-    //             console.log("error");
+            } else {
+              return "unknown"
+            }
+          }).catch(() => {
+            console.log("error");
 
-    //           })
+          })
 
-    //     });
-
-
+        });
 
 
-    // });
+
+
+      });
 
 
 
@@ -77,5 +105,6 @@ export class MainComponent implements OnInit {
       })
 
   }
+
 
 }

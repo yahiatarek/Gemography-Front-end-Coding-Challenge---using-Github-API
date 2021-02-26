@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MainComponent } from './components/main/main.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ConvertingWatchersPipe } from './converting-watchers.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent, MainComponent
+    AppComponent, MainComponent, ConvertingWatchersPipe
   ],
   imports: [
     BrowserModule,

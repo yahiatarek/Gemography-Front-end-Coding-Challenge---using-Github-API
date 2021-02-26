@@ -15,7 +15,7 @@
             <div class="col-md-10">
                 <h2>{{item.name}}</h2>
                 <h6>{{item.description}}</h6>
-                <p><span class="mr-3">Stars:118k</span><span class="mx-3">Issues:{{item.open_issues_count}}</span><span>Submitted x days ago by <span class="font-weight-bold" >{{myName}}</span></span> </p>
+                <p><span class="mr-3">Stars: {{item.watchers_count|convertingWatchers}}K</span><span class="mx-3">Issues:{{item.open_issues_count}}</span><span>pushed {{myDays}} days ago by <span class="font-weight-bold" >{{myName}}</span></span> </p>
                
             </div>
             </div>
@@ -27,21 +27,3 @@
 </div>
   
 </div>
-<!-- <div class="container my-md-5">
-    <div class="row">
-        <div *ngFor="let item of Items" class="col-12 my-md-3">
-            <div class="row">
-            <div class="col-md-2">
-                <img class="w-100" [src]="item.owner.avatar_url" alt="Avatar">
-            </div>
-            <div class="col-md-10">
-                <h2>{{item.name}}</h2>
-                <h6>{{item.description}}</h6>
-                <p><span class="mr-3">Stars:118k</span><span class="mx-3">Issues:{{item.open_issues_count}}</span><span>Submitted x days ago by <span class="font-weight-bold" >{{myName}}</span></span> </p>
-               
-            </div>
-            </div>
-        </div>
-    </div>
-
-</div> -->
