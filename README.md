@@ -8,7 +8,8 @@
 - JS Date Object to handle dates.
 - A Button to scroll back up the window.
 - npm (Node Package Manager)
-### Note: Please type ### npm i command in your cmd to download dependencies...
+### Note: 
+Please type "npm i" command in your cmd to download dependencies...
 # GithubAPI
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.7.
