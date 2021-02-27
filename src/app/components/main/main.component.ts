@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject } from 'rxjs';
 import { APIService } from 'src/app/services/api.service';
 const axios = require('axios').default;
@@ -8,14 +9,15 @@ const axios = require('axios').default;
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  arraySabet= new BehaviorSubject<number[]>([]);
-  newArraySabet:number[]=[];
+  notScroll = true
+  arraySabet = new BehaviorSubject<number[]>([]);
+  newArraySabet: number[] = [];
   Items: any
-  myName:any
+  myName: any
   GithubUrl: string
   names = new BehaviorSubject("");
   pageNo: number = 0
-  constructor(public _APIService: APIService) {
+  constructor(public _APIService: APIService, public spinner: NgxSpinnerService) {
     this.getDate30DaysBefore()
     const axios = require('axios');
     this.display("")
@@ -31,18 +33,17 @@ export class MainComponent implements OnInit {
   loop(data) {
     this.names.next(data)
   }
- 
+
   ngOnInit(): void {
     this.names.subscribe((data) => {
       this.myName = data
-      console.log(data);
 
     })
     this.arraySabet.subscribe((data) => {
       //console.log(data);
       this.newArraySabet = data
     })
-    
+
   }
 
   display(page) {
@@ -50,7 +51,6 @@ export class MainComponent implements OnInit {
     axios.get(this.GithubUrl + page)
       .then((data) => {
         this.Items = data.data.items
-        console.log(this.Items);
       })
       .catch((error) => {
 
@@ -62,10 +62,9 @@ export class MainComponent implements OnInit {
           let date = new Date(element.pushed_at)
           let daysAgo = Math.abs(now.getTime() - date.getTime());
           let days = Math.round(daysAgo / (60 * 60 * 24 * 1000))
-          let array: number[]=[]
-          array.push(days)        
+          let array: number[] = []
+          array.push(days)
           this.arraySabet.next(array)
-          console.log(this.arraySabet.value);
           //this.addingDays(days)
           axios.get(url).then((data) => {
             if (data) {
@@ -90,18 +89,21 @@ export class MainComponent implements OnInit {
 
   }
   onScroll() {
-    this.pageNo++
+    if (this.notScroll) {
+      this.spinner.show()
+      this.notScroll = false
+      this.pageNo++
 
-    let myPage = `&page=${this.pageNo}`
-    console.log(myPage);
-    axios.get(this.GithubUrl + myPage)
-      .then((data) => {
-        this.Items = this.Items.concat(data.data.items)
-        console.log(this.Items);
-      })
-      .catch((error) => {
+      let myPage = `&page=${this.pageNo}`
+      axios.get(this.GithubUrl + myPage)
+        .then((data) => {
+          this.Items = this.Items.concat(data.data.items)
+          this.notScroll = true
+        })
+        .catch((error) => {
 
-      })
+        })
+    }
 
   }
 
