@@ -8,7 +8,7 @@
 - JS Date Object to handle dates.
 - A Button to scroll back up the window.
 - npm (Node Package Manager)
-### Note: 
+### Note: 🚨 :rotating_light:
 Please type "npm i" command in your cmd to download dependencies...
 # GithubAPI
 
