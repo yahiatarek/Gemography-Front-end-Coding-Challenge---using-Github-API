@@ -88,6 +88,14 @@ export class MainComponent implements OnInit {
 
 
   }
+  scrollToTop() {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+
+  }
   onScroll() {
     if (this.notScroll) {
       this.spinner.show()
