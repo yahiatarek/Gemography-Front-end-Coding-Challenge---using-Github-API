@@ -1,3 +1,16 @@
+# Gemography Front-end Coding Challenge
+## Tools/libraries used:
+- Angular 11.
+- ngx-pagination (infinite-scroll).
+- ngx-spinner (for loading effects).
+- Styled-components (basic CSS and Bootstrap grid).
+- Axios to send asynchronous HTTP request to GitHub REST API.
+- Behaviour Subjects are used to allow subscribing on async data.
+- JS Date Object to handle dates.
+- A Button to scroll back up the window.
+- npm (Node Package Manager)
+### Note: 🚨 :rotating_light:
+Please type "npm i" command in your cmd to download dependencies...
 # GithubAPI
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.7.
