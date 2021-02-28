@@ -5,7 +5,6 @@
 - ngx-spinner (for loading effects).
 - Styled-components (basic CSS and Bootstrap grid).
 - Axios to send asynchronous HTTP request to GitHub REST API.
-- Behaviour Subjects are used to allow subscribing on async data.
 - JS Date Object to handle dates.
 - A Button to scroll back up the window.
 - npm (Node Package Manager)
