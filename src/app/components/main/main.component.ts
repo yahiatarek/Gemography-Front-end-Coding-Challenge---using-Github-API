@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BehaviorSubject } from 'rxjs';
 import { APIService } from 'src/app/services/api.service';
 const axios = require('axios').default;
 @Component({
@@ -12,7 +11,7 @@ export class MainComponent implements OnInit {
   notScroll = true
   Items: any[] = [{ myItems: [], dates: [], names: [] }]
   GithubUrl: string
-  pageNo: number = 0
+  pageNo: number = 1
   constructor(public _APIService: APIService, public spinner: NgxSpinnerService) {
     this.getDate30DaysBefore()
     const axios = require('axios');
@@ -23,7 +22,6 @@ export class MainComponent implements OnInit {
     date.setDate(date.getDate() - 30);
     let dateString = date.toISOString().split('T')[0];
     this.GithubUrl = `https://api.github.com/search/repositories?q=created:%3E${dateString}&sort=stars&order=desc`
-    //console.log(dateString);
 
   }
 
@@ -91,11 +89,14 @@ export class MainComponent implements OnInit {
       let myPage = `&page=${this.pageNo}`
       axios.get(this.GithubUrl + myPage)
         .then((data) => {
+          console.log(this.GithubUrl + myPage);
+
           this.Items[0].myItems = this.Items[0].myItems.concat(data.data.items)
 
           this.notScroll = true
         })
-        .catch((error) => {
+        .catch(() => {
+          console.log("error");
 
         }).then(() => {
 
