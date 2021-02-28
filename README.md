@@ -3,7 +3,8 @@
 - Angular 11.
 - ngx-pagination (infinite-scroll).
 - ngx-spinner (for loading effects).
-- Styled-components (basic CSS and Bootstrap grid).
+- Styled-components (basic CSS, Bootstrap grid).
+- Angular material was used to create the Navbar, Ripple effect and the dividers.
 - Axios to send asynchronous HTTP request to GitHub REST API.
 - JS Date Object to handle dates.
 - A Button to scroll back up the window.
