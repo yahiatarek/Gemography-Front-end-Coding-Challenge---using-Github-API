@@ -44,30 +44,7 @@ export class MainComponent implements OnInit {
 
       })
       .then(() => {
-        this.Items[0].myItems.forEach(element => {
-          let url = element.owner.url
-          let now = new Date()
-          let date = new Date(element.pushed_at)
-          let daysAgo = Math.abs(now.getTime() - date.getTime());
-          let days = Math.round(daysAgo / (60 * 60 * 24 * 1000))
-
-          this.Items[0].dates.push(days)
-
-          axios.get(url).then((data) => {
-            if (data) {
-              this.Items[0].names.push(data.data.name)
-            } else {
-              return "unknown"
-            }
-          }).catch(() => {
-            console.log("error");
-
-          })
-
-        });
-
-
-
+        this.updatingDatesAndNames()
 
       });
 
@@ -82,7 +59,29 @@ export class MainComponent implements OnInit {
 
 
   }
+  updatingDatesAndNames() {
+    this.Items[0].myItems.forEach(element => {
+      let url = element.owner.url
+      let now = new Date()
+      let date = new Date(element.pushed_at)
+      let daysAgo = Math.abs(now.getTime() - date.getTime());
+      let days = Math.round(daysAgo / (60 * 60 * 24 * 1000))
 
+      this.Items[0].dates.push(days)
+
+      axios.get(url).then((data) => {
+        if (data) {
+          this.Items[0].names.push(data.data.name)
+        } else {
+          return "unknown"
+        }
+      }).catch(() => {
+        console.log("error");
+
+      })
+
+    });
+  }
   onScroll() {
     if (this.notScroll) {
       this.spinner.show()
@@ -93,11 +92,22 @@ export class MainComponent implements OnInit {
       axios.get(this.GithubUrl + myPage)
         .then((data) => {
           this.Items[0].myItems = this.Items[0].myItems.concat(data.data.items)
+
           this.notScroll = true
         })
         .catch((error) => {
 
-        })
+        }).then(() => {
+
+          this.updatingDatesAndNames()
+
+
+
+        });
+
+
+
+
     }
 
   }
