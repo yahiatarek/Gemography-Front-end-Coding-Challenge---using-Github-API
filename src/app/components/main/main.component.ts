@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { APIService } from 'src/app/services/api.service';
+declare var $: any
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { MatRipple } from '@angular/material/core';
 const axios = require('axios').default;
 @Component({
   selector: 'app-main',
@@ -8,14 +15,30 @@ const axios = require('axios').default;
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  panelOpenState = false;
   notScroll = true
   Items: any[] = [{ myItems: [], dates: [], names: [] }]
   GithubUrl: string
   pageNo: number = 1
-  constructor(public _APIService: APIService, public spinner: NgxSpinnerService) {
+  constructor(private _snackBar: MatSnackBar, public _APIService: APIService, public spinner: NgxSpinnerService) {
+
+
     this.getDate30DaysBefore()
     const axios = require('axios');
     this.display("")
+
+  }
+
+
+  openSnackBar() {
+    this._snackBar.open("You're now on top!!", '', {
+      duration: 2000,
+      panelClass: ['blue-snackbar'],
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   getDate30DaysBefore() {
     let date = new Date();
@@ -29,11 +52,9 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
 
 
-
   }
 
   display(page) {
-
     axios.get(this.GithubUrl + page)
       .then((data) => {
         this.Items[0].myItems = data.data.items
@@ -45,17 +66,23 @@ export class MainComponent implements OnInit {
         this.updatingDatesAndNames()
 
       });
-
-
-
   }
+
   scrollToTop() {
-    window.scroll({
-      top: 0,
-      behavior: 'smooth'
-    });
-
-
+    if (window.scrollY == 0) {
+      this.isUp()
+    } else {
+      window.scroll({
+        top: 0,
+        behavior: 'smooth'
+      });
+      setTimeout(() => {
+        this.isUp()
+      }, 1000);
+    }
+  }
+  isUp() {
+    this.openSnackBar()
   }
   updatingDatesAndNames() {
     this.Items[0].myItems.forEach(element => {
@@ -115,3 +142,4 @@ export class MainComponent implements OnInit {
 
 
 }
+
